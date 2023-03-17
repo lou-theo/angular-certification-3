@@ -1,0 +1,12 @@
+<dialog #dialog>
+  <div>
+    <span (click)="close()" class="close-icon">&times;</span>
+    <h2 *ngIf="title">{{ title }}</h2>
+  </div>
+  <div class="content">
+    <ng-content></ng-content>
+  </div>
+  <div>
+    <ng-content select="[actions]"></ng-content>
+  </div>
+</dialog>

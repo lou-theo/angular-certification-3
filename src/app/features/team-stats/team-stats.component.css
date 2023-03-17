@@ -3,10 +3,6 @@
   margin: 5px;
   display: block;
 }
-span{
-  float: right;
-  cursor: pointer;
-}
 
 mark.W {
   background-color: green;

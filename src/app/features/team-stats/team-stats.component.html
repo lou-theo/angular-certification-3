@@ -1,7 +1,8 @@
 <div class="card" *ngIf="games$ | async as games">
   <div>
     <h3>
-      {{ team.full_name }} [{{ team.abbreviation }}] <span (click)="nbaService.removeTrackedTeam(team)">&times;</span>
+      {{ team.full_name }} [{{ team.abbreviation }}]
+      <span (click)="confirmDialog.show()" class="close-icon">&times;</span>
     </h3>
     <h6>{{ team.conference }}ern conference</h6>
   </div>
@@ -28,4 +29,12 @@
   <div>
     <button class="tertiary" [routerLink]="'results/' + team.abbreviation">See game results >></button>
   </div>
+
+  <app-generic-dialog title="Confirmation Dialog" #confirmDialog>
+    <ng-container>Are you sure to remove tracking of team {{ team.full_name }} ?</ng-container>
+    <ng-container actions>
+      <button class="secondary" (click)="confirmDialog.close()">No</button>
+      <button class="primary" (click)="nbaService.removeTrackedTeam(team); confirmDialog.close()">Yes</button>
+    </ng-container>
+  </app-generic-dialog>
 </div>
