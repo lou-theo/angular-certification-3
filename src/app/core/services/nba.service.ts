@@ -10,11 +10,6 @@ import { TeamModel } from '../models/team.model';
   providedIn: 'root',
 })
 export class NbaService {
-  private headers = {
-    'X-RapidAPI-Key': '2QMXSehDLSmshDmRQcKUIAiQjIZAp1UvKUrjsnewgqSP6F5oBX',
-    'X-RapidAPI-Host': 'free-nba.p.rapidapi.com',
-  };
-  private API_URL = 'https://free-nba.p.rapidapi.com';
   trackedTeams: TeamModel[] = [];
 
   constructor(private http: HttpClient) {}
@@ -33,20 +28,14 @@ export class NbaService {
   }
 
   getAllTeams(): Observable<TeamModel[]> {
-    return this.http
-      .get<{ data: TeamModel[] }>(`${this.API_URL}/teams?page=0`, { headers: this.headers })
-      .pipe(map((res) => res.data));
+    return this.http.get<{ data: TeamModel[] }>(`teams?page=0`).pipe(map((res) => res.data));
   }
 
   getLastResults(team: TeamModel, numberOfDays = 12): Observable<GameModel[]> {
     return this.http
-      .get<{ meta: unknown; data: GameModel[] }>(
-        `${this.API_URL}/games?page=0${this.getDaysQueryString(numberOfDays)}`,
-        {
-          headers: this.headers,
-          params: { per_page: 12, 'team_ids[]': '' + team.id },
-        },
-      )
+      .get<{ meta: unknown; data: GameModel[] }>(`games?page=0${this.getDaysQueryString(numberOfDays)}`, {
+        params: { per_page: 12, 'team_ids[]': '' + team.id },
+      })
       .pipe(map((res) => res.data));
   }
 
@@ -62,8 +51,8 @@ export class NbaService {
       const gameStats = this.getSingleGameStats(team, game);
       stats.wins += gameStats.wins;
       stats.losses += gameStats.losses;
-      stats.averagePointsConceded += gameStats.averagePointsConceded;
       stats.averagePointsScored += gameStats.averagePointsScored;
+      stats.averagePointsConceded += gameStats.averagePointsConceded;
       stats.lastGames.push(gameStats.wins == 1 ? 'W' : 'L');
     });
     stats.averagePointsScored = Math.round(stats.averagePointsScored / games.length);
