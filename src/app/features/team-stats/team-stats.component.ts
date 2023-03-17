@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { NbaService } from '../nba.service';
-import { Game, Stats, Team } from '../data.models';
+import { GameModel } from '../../core/models/game.model';
+import { StatisticsModel } from '../../core/models/statistics.model';
+import { TeamModel } from '../../core/models/team.model';
+import { NbaService } from '../../core/services/nba.service';
 
 @Component({
   selector: 'app-team-stats',
@@ -10,10 +12,10 @@ import { Game, Stats, Team } from '../data.models';
 })
 export class TeamStatsComponent implements OnInit {
   @Input()
-  team!: Team;
+  team!: TeamModel;
 
-  games$!: Observable<Game[]>;
-  stats!: Stats;
+  games$!: Observable<GameModel[]>;
+  stats!: StatisticsModel;
   constructor(protected nbaService: NbaService) {}
 
   ngOnInit(): void {

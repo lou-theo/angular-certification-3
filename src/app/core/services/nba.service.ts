@@ -1,8 +1,10 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { format, subDays } from 'date-fns';
-import { Game, Stats, Team } from './data.models';
+import { map, Observable } from 'rxjs';
+import { GameModel } from '../models/game.model';
+import { StatisticsModel } from '../models/statistics.model';
+import { TeamModel } from '../models/team.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,44 +15,49 @@ export class NbaService {
     'X-RapidAPI-Host': 'free-nba.p.rapidapi.com',
   };
   private API_URL = 'https://free-nba.p.rapidapi.com';
-  trackedTeams: Team[] = [];
+  trackedTeams: TeamModel[] = [];
 
   constructor(private http: HttpClient) {}
 
-  addTrackedTeam(team: Team): void {
+  addTrackedTeam(team: TeamModel): void {
     this.trackedTeams.push(team);
   }
 
-  removeTrackedTeam(team: Team): void {
+  removeTrackedTeam(team: TeamModel): void {
     const index = this.trackedTeams.findIndex((t) => t.id == team.id);
     this.trackedTeams.splice(index, 1);
   }
 
-  getTrackedTeams(): Team[] {
+  getTrackedTeams(): TeamModel[] {
     return this.trackedTeams;
   }
 
-  getAllTeams(): Observable<Team[]> {
+  getAllTeams(): Observable<TeamModel[]> {
     return this.http
-      .get<{ data: Team[] }>(`${this.API_URL}/teams?page=0`, { headers: this.headers })
+      .get<{ data: TeamModel[] }>(`${this.API_URL}/teams?page=0`, { headers: this.headers })
       .pipe(map((res) => res.data));
   }
 
-  getLastResults(team: Team, numberOfDays = 12): Observable<Game[]> {
-    return (
-      this.http
-        // TODO: find a way to remove the any type
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .get<{ meta: any; data: Game[] }>(`${this.API_URL}/games?page=0${this.getDaysQueryString(numberOfDays)}`, {
+  getLastResults(team: TeamModel, numberOfDays = 12): Observable<GameModel[]> {
+    return this.http
+      .get<{ meta: unknown; data: GameModel[] }>(
+        `${this.API_URL}/games?page=0${this.getDaysQueryString(numberOfDays)}`,
+        {
           headers: this.headers,
           params: { per_page: 12, 'team_ids[]': '' + team.id },
-        })
-        .pipe(map((res) => res.data))
-    );
+        },
+      )
+      .pipe(map((res) => res.data));
   }
 
-  getStatsFromGames(games: Game[], team: Team): Stats {
-    const stats: Stats = { wins: 0, losses: 0, averagePointsScored: 0, averagePointsConceded: 0, lastGames: [] };
+  getStatsFromGames(games: GameModel[], team: TeamModel): StatisticsModel {
+    const stats: StatisticsModel = {
+      wins: 0,
+      losses: 0,
+      averagePointsScored: 0,
+      averagePointsConceded: 0,
+      lastGames: [],
+    };
     games.forEach((game) => {
       const gameStats = this.getSingleGameStats(team, game);
       stats.wins += gameStats.wins;
@@ -65,16 +72,22 @@ export class NbaService {
   }
 
   private getDaysQueryString(nbOfDays = 12): string {
-    let qs = '';
+    let queryString = '';
     for (let i = 1; i < nbOfDays; i++) {
       const date = format(subDays(new Date(), i), 'yyyy-MM-dd');
-      qs = qs.concat('&dates[]=' + date);
+      queryString = queryString.concat('&dates[]=' + date);
     }
-    return qs;
+    return queryString;
   }
 
-  private getSingleGameStats(team: Team, game: Game): Stats {
-    const stats: Stats = { wins: 0, losses: 0, averagePointsScored: 0, averagePointsConceded: 0, lastGames: [] };
+  private getSingleGameStats(team: TeamModel, game: GameModel): StatisticsModel {
+    const stats: StatisticsModel = {
+      wins: 0,
+      losses: 0,
+      averagePointsScored: 0,
+      averagePointsConceded: 0,
+      lastGames: [],
+    };
     if (game.home_team.id === team.id) {
       stats.averagePointsScored = game.home_team_score;
       stats.averagePointsConceded = game.visitor_team_score;

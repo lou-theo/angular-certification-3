@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Team } from '../data.models';
+import { TeamModel } from '../../core/models/team.model';
 import { Observable, tap } from 'rxjs';
-import { NbaService } from '../nba.service';
+import { NbaService } from '../../core/services/nba.service';
 
 @Component({
   selector: 'app-game-stats',
@@ -9,8 +9,8 @@ import { NbaService } from '../nba.service';
   styleUrls: ['./game-stats.component.css'],
 })
 export class GameStatsComponent {
-  teams$: Observable<Team[]>;
-  allTeams: Team[] = [];
+  teams$: Observable<TeamModel[]>;
+  allTeams: TeamModel[] = [];
 
   constructor(protected nbaService: NbaService) {
     this.teams$ = nbaService.getAllTeams().pipe(tap((data) => (this.allTeams = data)));

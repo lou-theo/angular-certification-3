@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NbaService } from '../nba.service';
-import { Game, Team } from '../data.models';
+import { GameModel } from '../../core/models/game.model';
+import { TeamModel } from '../../core/models/team.model';
+import { NbaService } from '../../core/services/nba.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -10,8 +11,8 @@ import { Observable } from 'rxjs';
   styleUrls: ['./game-results.component.css'],
 })
 export class GameResultsComponent {
-  team?: Team;
-  games$?: Observable<Game[]>;
+  team?: TeamModel;
+  games$?: Observable<GameModel[]>;
 
   constructor(private activatedRoute: ActivatedRoute, private nbaService: NbaService) {
     this.activatedRoute.paramMap.subscribe((paramMap) => {
