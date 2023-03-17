@@ -4,11 +4,15 @@ import { GameModel } from '../../core/models/game.model';
 import { StatisticsModel } from '../../core/models/statistics.model';
 import { TeamModel } from '../../core/models/team.model';
 import { NbaService } from '../../core/services/nba.service';
+import { RouterLink } from '@angular/router';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-team-stats',
   templateUrl: './team-stats.component.html',
   styleUrls: ['./team-stats.component.css'],
+  imports: [NgIf, NgFor, RouterLink, AsyncPipe],
+  standalone: true,
 })
 export class TeamStatsComponent implements OnInit {
   @Input()
