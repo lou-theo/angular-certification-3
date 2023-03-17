@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { GameModel } from '../../core/models/game.model';
-import { TeamModel } from '../../core/models/team.model';
-import { NbaService } from '../../core/services/nba.service';
+import { GameModel } from '@core/models/game.model';
+import { TeamModel } from '@core/models/team.model';
+import { NbaService } from '@core/services/nba.service';
 import { Observable } from 'rxjs';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 

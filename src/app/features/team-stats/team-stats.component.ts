@@ -1,11 +1,11 @@
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable, tap } from 'rxjs';
-import { GameModel } from '../../core/models/game.model';
-import { StatisticsModel } from '../../core/models/statistics.model';
-import { TeamModel } from '../../core/models/team.model';
-import { NbaService } from '../../core/services/nba.service';
 import { RouterLink } from '@angular/router';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { GameModel } from '@core/models/game.model';
+import { StatisticsModel } from '@core/models/statistics.model';
+import { TeamModel } from '@core/models/team.model';
+import { NbaService } from '@core/services/nba.service';
+import { Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'app-team-stats',

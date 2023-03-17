@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { TeamModel } from '../../core/models/team.model';
+import { TeamModel } from '@core/models/team.model';
 import { Observable, tap } from 'rxjs';
-import { NbaService } from '../../core/services/nba.service';
+import { NbaService } from '@core/services/nba.service';
 import { TeamStatsComponent } from '../team-stats/team-stats.component';
 import { FormsModule } from '@angular/forms';
 import { NgFor, AsyncPipe } from '@angular/common';
