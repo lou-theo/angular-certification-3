@@ -27,7 +27,7 @@
     </div>
   </div>
   <div>
-    <button class="tertiary" [routerLink]="'results/' + team.abbreviation">See game results >></button>
+    <button class="tertiary" [routerLink]="['/results', team.abbreviation]">See game results >></button>
   </div>
 
   <app-generic-dialog title="Confirmation Dialog" #confirmDialog>

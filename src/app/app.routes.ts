@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { GameStatsComponent } from '@app/features/game-stats/game-stats.component';
 
 const routes: Routes = [
   {
@@ -7,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    loadComponent: () => import('./features/game-stats/game-stats.component').then((m) => m.GameStatsComponent),
+    loadComponent: () => GameStatsComponent,
   },
 ];
 
