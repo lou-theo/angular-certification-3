@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CONFERENCES } from '@core/constants/conference.constant';
 import { DIVISIONS } from '@core/constants/division.constant';
 import { TeamModel } from '@core/models/team.model';
+import { ResetIfOptionUnavailableDirective } from '@shared/directives/reset-if-option-unavailable.directive';
 import { FalsyToUndefinedPipe } from '@shared/pipes/falsy-to-undefined.pipe';
 import { ShapeFilterPipe } from '@shared/pipes/shape-filter.pipe';
 
@@ -12,7 +13,7 @@ import { ShapeFilterPipe } from '@shared/pipes/shape-filter.pipe';
   standalone: true,
   templateUrl: './team-search-bar.component.html',
   styleUrls: ['./team-search-bar.component.css'],
-  imports: [FormsModule, ShapeFilterPipe, FalsyToUndefinedPipe, NgFor],
+  imports: [FormsModule, ShapeFilterPipe, FalsyToUndefinedPipe, NgFor, ResetIfOptionUnavailableDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TeamSearchBarComponent {

@@ -6,7 +6,7 @@
     </option>
   </select>
 
-  <select ngModel="" #divisionSelect="ngModel">
+  <select ngModel="" #divisionSelect="ngModel" appResetIfOptionUnavailable="">
     <option value="">All divisions</option>
     <option
       *ngFor="
@@ -23,7 +23,7 @@
     </option>
   </select>
 
-  <select ngModel="0" #teamSelect="ngModel">
+  <select ngModel="0" #teamSelect="ngModel" appResetIfOptionUnavailable="0">
     <option value="0">Select a team</option>
     <option
       *ngFor="

@@ -9,6 +9,7 @@ export class ShapeFilterPipe<U extends { [key: string]: unknown }, T extends NgI
 {
   transform(sourceIterable: T, filterShape: Partial<U>): Array<U> {
     return Array.from(sourceIterable).filter((item) => {
+      // could be improved for more complex filter shapes
       return Object.entries(filterShape)
         .filter(([, value]) => value !== undefined)
         .every(([key, value]) => item[key] === value);
