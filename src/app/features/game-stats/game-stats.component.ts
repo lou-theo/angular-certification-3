@@ -49,7 +49,7 @@ export class GameStatsComponent {
     return team.id.toString();
   }
 
-  trackByValue(index: number, value: string): string {
-    return value;
+  trackByDivision(index: number, divisionInfo: { division: string; conference: string }): string {
+    return divisionInfo.division;
   }
 }

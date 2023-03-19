@@ -2,7 +2,7 @@
   <div class="col-sm-11">
     <select ngModel="" #conferenceSelect="ngModel">
       <option value="">All conferences</option>
-      <option [value]="conference" *ngFor="let conference of CONFERENCES; trackBy: trackByValue">
+      <option [value]="conference" *ngFor="let conference of CONFERENCES">
         {{ conference }}
       </option>
     </select>
@@ -16,7 +16,7 @@
               : {
                   conference: conferenceSelect.value | falsyToUndefined
                 };
-          trackBy: trackByValue
+          trackBy: trackByDivision
         "
         [value]="divisionInfo.division"
       >
