@@ -4,6 +4,7 @@
   "scripts": {
     "start": "ng serve",
     "build": "ng build",
+    "build:github-page": "rm -f -r docs && npm run build && mv dist/ng-cert-nba docs && rm -f -r dist",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint:js": "ng lint --fix --ignore-path .gitignore",
