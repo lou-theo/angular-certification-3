@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { format, subDays } from 'date-fns';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { GameModel } from '../models/game.model';
 import { StatisticsModel } from '../models/statistics.model';
 import { TeamModel } from '../models/team.model';
@@ -10,9 +10,15 @@ import { TeamModel } from '../models/team.model';
   providedIn: 'root',
 })
 export class NbaService {
-  trackedTeams: TeamModel[] = [];
+  public trackedTeams: TeamModel[] = [];
+  private numberOfTrackingDays: BehaviorSubject<number> = new BehaviorSubject(12);
+  public numberOfTrackingDays$ = this.numberOfTrackingDays.asObservable();
 
   constructor(private http: HttpClient) {}
+
+  setNumberOfTrackingDays(numberOfDays: number): void {
+    this.numberOfTrackingDays.next(numberOfDays);
+  }
 
   addTrackedTeam(team: TeamModel): void {
     this.trackedTeams.push(team);
@@ -31,7 +37,7 @@ export class NbaService {
     return this.http.get<{ data: TeamModel[] }>(`teams?page=0`).pipe(map((res) => res.data));
   }
 
-  getLastResults(team: TeamModel, numberOfDays = 12): Observable<GameModel[]> {
+  getLastResults(team: TeamModel, numberOfDays = this.numberOfTrackingDays.getValue()): Observable<GameModel[]> {
     return this.http
       .get<{ meta: unknown; data: GameModel[] }>(`games?page=0${this.getDaysQueryString(numberOfDays)}`, {
         params: { per_page: 12, 'team_ids[]': '' + team.id },
@@ -60,7 +66,7 @@ export class NbaService {
     return stats;
   }
 
-  private getDaysQueryString(nbOfDays = 12): string {
+  private getDaysQueryString(nbOfDays = this.numberOfTrackingDays.getValue()): string {
     let queryString = '';
     for (let i = 1; i < nbOfDays; i++) {
       const date = format(subDays(new Date(), i), 'yyyy-MM-dd');

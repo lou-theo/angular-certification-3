@@ -48,6 +48,17 @@
       </button>
     </ng-container>
     <ng-template #teamLoader>Teams are loading...</ng-template>
+
+    <span>for the last</span>
+
+    <select
+      [ngModel]="nbaService.numberOfTrackingDays$ | async"
+      (ngModelChange)="nbaService.setNumberOfTrackingDays($event)"
+    >
+      <option value="6">6 days</option>
+      <option value="12">12 days</option>
+      <option value="20">20 days</option>
+    </select>
   </div>
 </div>
 <div class="row">

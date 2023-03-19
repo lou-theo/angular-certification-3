@@ -1,4 +1,4 @@
-import { NgFor, TitleCasePipe } from '@angular/common';
+import { AsyncPipe, NgFor, TitleCasePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CONFERENCES } from '@core/constants/conference.constant';
@@ -15,7 +15,16 @@ import { TeamStatsComponent } from '../team-stats/team-stats.component';
   selector: 'app-game-stats',
   templateUrl: './game-stats.component.html',
   styleUrls: ['./game-stats.component.css'],
-  imports: [NgFor, FormsModule, TeamStatsComponent, TitleCasePipe, LetModule, ShapeFilterPipe, FalsyToUndefinedPipe],
+  imports: [
+    NgFor,
+    FormsModule,
+    TeamStatsComponent,
+    TitleCasePipe,
+    LetModule,
+    ShapeFilterPipe,
+    FalsyToUndefinedPipe,
+    AsyncPipe,
+  ],
   standalone: true,
 })
 export class GameStatsComponent {

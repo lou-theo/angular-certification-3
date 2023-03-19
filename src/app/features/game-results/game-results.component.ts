@@ -17,7 +17,7 @@ export class GameResultsComponent {
   team?: TeamModel;
   games$?: Observable<GameModel[]>;
 
-  constructor(private activatedRoute: ActivatedRoute, private nbaService: NbaService) {
+  constructor(private activatedRoute: ActivatedRoute, protected nbaService: NbaService) {
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       this.team = this.nbaService.getTrackedTeams().find((team) => team.abbreviation === paramMap.get('teamAbbr'));
       if (this.team) this.games$ = this.nbaService.getLastResults(this.team);
