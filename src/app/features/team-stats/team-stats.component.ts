@@ -1,5 +1,5 @@
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { GameModel } from '@core/models/game.model';
 import { StatisticsModel } from '@core/models/statistics.model';
@@ -14,6 +14,7 @@ import { Observable, Subscription, tap } from 'rxjs';
   styleUrls: ['./team-stats.component.css'],
   imports: [NgIf, NgFor, RouterLink, AsyncPipe, GenericDialogComponent],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TeamStatsComponent implements OnInit, OnDestroy {
   @Input() team!: TeamModel;

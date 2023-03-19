@@ -1,5 +1,5 @@
 import { AsyncPipe, NgForOf } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TeamSearchBarComponent } from '@app/features/team-search-bar/team-search-bar.component';
 import { TeamModel } from '@core/models/team.model';
 import { NbaService } from '@core/services/nba.service';
@@ -13,6 +13,7 @@ import { TeamStatsComponent } from '../team-stats/team-stats.component';
   styleUrls: ['./game-stats.component.css'],
   imports: [TeamStatsComponent, TeamSearchBarComponent, NgForOf, LetModule, AsyncPipe],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameStatsComponent {
   allTeams$: Observable<TeamModel[]>;

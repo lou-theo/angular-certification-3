@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-generic-dialog',
@@ -7,6 +7,7 @@ import { Component, ElementRef, Input, ViewChild } from '@angular/core';
   imports: [CommonModule],
   templateUrl: './generic-dialog.component.html',
   styleUrls: ['./generic-dialog.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GenericDialogComponent {
   @ViewChild('dialog') dialog!: ElementRef<HTMLDialogElement>;
