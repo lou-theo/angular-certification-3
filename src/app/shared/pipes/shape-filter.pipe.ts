@@ -1,10 +1,10 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { NgIterable, Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'shapeFilter',
   standalone: true,
 })
-export class ShapeFilterPipe<U extends { [key: string]: unknown }, T extends Iterable<U> = Iterable<U>>
+export class ShapeFilterPipe<U extends { [key: string]: unknown }, T extends NgIterable<U> = NgIterable<U>>
   implements PipeTransform
 {
   transform(sourceIterable: T, filterShape: Partial<U>): Array<U> {
