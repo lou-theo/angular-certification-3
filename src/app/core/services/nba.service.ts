@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { format, subDays } from 'date-fns';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
 import { GameModel } from '../models/game.model';
 import { StatisticsModel } from '../models/statistics.model';
 import { TeamModel } from '../models/team.model';
@@ -10,6 +10,7 @@ import { TeamModel } from '../models/team.model';
   providedIn: 'root',
 })
 export class NbaService {
+  public allTeams: TeamModel[] = [];
   public trackedTeams: TeamModel[] = [];
   private numberOfTrackingDays: BehaviorSubject<number> = new BehaviorSubject(12);
   public numberOfTrackingDays$ = this.numberOfTrackingDays.asObservable();
@@ -20,8 +21,13 @@ export class NbaService {
     this.numberOfTrackingDays.next(numberOfDays);
   }
 
-  addTrackedTeam(team: TeamModel): void {
+  addTrackedTeam(teamId: number): boolean {
+    const team = this.allTeams.find((team) => team.id == Number(teamId));
+    if (!team) {
+      return false;
+    }
     this.trackedTeams.push(team);
+    return true;
   }
 
   removeTrackedTeam(team: TeamModel): void {
@@ -34,7 +40,13 @@ export class NbaService {
   }
 
   getAllTeams(): Observable<TeamModel[]> {
-    return this.http.get<{ data: TeamModel[] }>(`teams?page=0`).pipe(map((res) => res.data));
+    if (this.allTeams.length > 0) {
+      return of(this.allTeams);
+    }
+    return this.http.get<{ data: TeamModel[] }>(`teams?page=0`).pipe(
+      map((res) => res.data),
+      tap((teams) => (this.allTeams = teams)),
+    );
   }
 
   getLastResults(team: TeamModel, numberOfDays = this.numberOfTrackingDays.getValue()): Observable<GameModel[]> {

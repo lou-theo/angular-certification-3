@@ -4,7 +4,7 @@ import { TeamSearchBarComponent } from '@app/features/team-search-bar/team-searc
 import { TeamModel } from '@core/models/team.model';
 import { NbaService } from '@core/services/nba.service';
 import { LetModule } from '@ngrx/component';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { TeamStatsComponent } from '../team-stats/team-stats.component';
 
 @Component({
@@ -16,16 +16,12 @@ import { TeamStatsComponent } from '../team-stats/team-stats.component';
 })
 export class GameStatsComponent {
   allTeams$: Observable<TeamModel[]>;
-  allTeams: TeamModel[] = [];
 
   constructor(protected nbaService: NbaService) {
-    this.allTeams$ = nbaService.getAllTeams().pipe(tap((data) => (this.allTeams = data)));
+    this.allTeams$ = nbaService.getAllTeams();
   }
 
   trackTeam(teamId: string): void {
-    const team = this.allTeams.find((team) => team.id == Number(teamId));
-    if (team) {
-      this.nbaService.addTrackedTeam(team);
-    }
+    this.nbaService.addTrackedTeam(Number(teamId));
   }
 }
