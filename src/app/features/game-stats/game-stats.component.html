@@ -11,6 +11,7 @@
   />
 </div>
 <ng-template #teamLoader>Teams are loading...</ng-template>
+
 <div class="row">
   <app-team-stats class="col-sm-4" *ngFor="let team of nbaService.getTrackedTeams()" [team]="team" />
 </div>

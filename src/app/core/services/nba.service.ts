@@ -22,7 +22,7 @@ export class NbaService {
   }
 
   addTrackedTeam(teamId: number): boolean {
-    const team = this.allTeams.find((team) => team.id == Number(teamId));
+    const team = this.allTeams.find((team) => team.id === teamId);
     if (!team) {
       return false;
     }
