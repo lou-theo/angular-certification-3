@@ -1,4 +1,4 @@
-<div class="card" *ngIf="team">
+<div class="card" *ngIf="team; else teamNotFound">
   <h3>{{ team.full_name }} [{{ team.abbreviation }}]</h3>
   <h6>{{ team.conference }}ern conference</h6>
   <hr />
@@ -7,5 +7,13 @@
     <strong>{{ game.home_team.abbreviation }}</strong> {{ game.home_team_score }} - {{ game.visitor_team_score }}
     <strong>{{ game.visitor_team.abbreviation }}</strong>
   </p>
-  <button class="tertiary" routerLink=""><< Back to all team stats</button>
+  <ng-container *ngTemplateOutlet="backButton"></ng-container>
 </div>
+<ng-template #teamNotFound>
+  <p>Team not found.</p>
+  <ng-container *ngTemplateOutlet="backButton"></ng-container>
+</ng-template>
+
+<ng-template #backButton>
+  <button class="tertiary" routerLink=""><< Back to all team stats</button>
+</ng-template>
